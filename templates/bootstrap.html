@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <h1>Статистика путешественника</h1>
+        
+        
+        <div class="row mt-4">
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        Путешествия
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#home">Главная</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile">Профиль</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content pt-3">
+                            <div class="tab-pane fade show active" id="home">
+                                <h5>Ближайшие поездки</h5>
+                                <ul>
+                                    <li>Бали, Индонезия — июнь 2024</li>
+                                    <li>Токио, Япония — сентябрь 2024</li>
+                                </ul>
+                                <hr>
+                                <h5>Советы путешественникам</h5>
+                                <p>✓ Всегда берите powerbank<br>✓ Используйте локальные SIM-карты<br>✓ Сохраняйте копии документов в облаке</p>
+                            </div>
+                            <div class="tab-pane fade" id="profile">
+                                <h5>Моя статистика</h5>
+                                <div class="d-flex justify-content-between">
+                                    <span>Посещено стран:</span>
+                                    <strong>15</strong>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Любимый континент:</span>
+                                    <strong>Азия</strong>
+                                </div>
+                                <hr>
+                                <h5>Последние впечатления</h5>
+                                <p>"Вьетнам поразил дешевизной и вкусной уличной едой! Советую попробовать фо-бо."</p>
+                                <div class="alert alert-info mt-3">
+                                    Следующая цель: увидеть северное сияние в Норвегии!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        FAQ о путешествиях
+                    </div>
+                    <div class="card-body">
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                        Как начать путешествовать?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show">
+                                    <div class="accordion-body">
+                                        <ol>
+                                            <li>Определите бюджет</li>
+                                            <li>Выберите направление по сезону</li>
+                                            <li>Ищите билеты через Skyscanner</li>
+                                            <li>Бронируйте жилье на Booking.com</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                        Нужна ли виза?
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse">
+                                    <div class="accordion-body">
+                                        Проверяйте на <a href="https://www.visalist.io" target="_blank">Visalist</a>. Без визы можно посетить:
+                                        <ul class="mt-2">
+                                            <li>Турция (60 дней)</li>
+                                            <li>Таиланд (30 дней)</li>
+                                            <li>Сербия (30 дней)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                                        Что взять в первую поездку?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" checked>
+                                            <label class="form-check-label">Аптечка</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" checked>
+                                            <label class="form-check-label">Универсальный адаптер</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" checked>
+                                            <label class="form-check-label">Копии документов</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mt-4">
+            <div class="card-body">
+                <h2>Прогресс изучения мира</h2>
+                <div class="progress mb-3" style="height: 25px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning text-dark" role="progressbar" style="width: 25%">
+                        <b>25% (15/195 стран)</b>
+                    </div>
+                </div>
+                <div class="alert alert-success">
+                    <i class="bi bi-airplane"></i> В этом году вы посетили: <strong>Испания, Вьетнам, Грузия</strong>
+                </div>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTripModal">
+                    + Добавить новую поездку
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно (дополнительно) -->
+<div class="modal fade" id="addTripModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Новое путешествие</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Страна</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Даты</label>
+                        <input type="text" class="form-control" placeholder="дд.мм.гггг - дд.мм.гггг">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

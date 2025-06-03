@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto text-center animate-fade">
+        <h1 class="display-4 mb-4">Добро пожаловать в мир путешествий!</h1>
+        <p class="lead">Откройте для себя самые удивительные места планеты</p>
+        <div class="mt-5">
+            <a href="{{ url_for('about') }}" class="btn btn-primary btn-lg me-3">Узнать больше</a>
+            <a href="{{ url_for('form') }}" class="btn btn-outline-primary btn-lg">Зарегистрироваться</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

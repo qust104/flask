@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Изображение{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <h1>Красивые места мира</h1>
+        <p class="lead">Вдохновляющие фотографии из разных уголков планеты</p>
+        
+        <div class="card shadow-lg mb-4">
+            <img src="{{ url_for('static', filename='img/travel.jpg') }}" class="card-img-top" alt="Путешествие">
+            <div class="card-body">
+                <h2 class="card-title">Гора Фиштауэр, Австрия</h2>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Нравится</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Поделиться</button>
+                    </div>
+                    <small class="text-muted">Фото: Иван Петров</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="alert alert-info mt-4">
+            <h4>Интересный факт</h4>
+            <p>Эта гора является частью Альп и достигает высоты 2000 метров над уровнем моря.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

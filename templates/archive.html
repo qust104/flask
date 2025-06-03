@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Архив{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <h1>Архив путешествий</h1>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h2>{{ name }}</h2>
+                <p>Количество поездок: {{ number1 }}</p>
+                <p>Средняя стоимость: ${{ "%.2f"|format(number2) }}</p>
+                <p>Общие расходы: ${{ "%.2f"|format(total) }}</p>
+                
+                <div class="progress mt-3">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ [number1 * 10, 100]|min }}%" 
+                        aria-valuenow="{{ number1 }}" aria-valuemin="0" aria-valuemax="10">
+                        Уровень опыта: {{ [number1, 10]|min }}/10
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="alert alert-info">
+            <h4>Статистика</h4>
+            <p>Вы посетили больше стран, чем {{ number1 * 7 }}% пользователей нашего сайта!</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

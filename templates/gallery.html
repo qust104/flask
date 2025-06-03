@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Галерея{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="text-center mb-5">Галерея путешествий</h1>
+        
+        <div id="travelCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#travelCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#travelCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#travelCarousel" data-bs-slide-to="2"></button>
+            </div>
+            
+            <div class="carousel-inner rounded-3 shadow-lg">
+                <div class="carousel-item active">
+                    <img src="{{ url_for('static', filename='img/travel1.jpg') }}" class="d-block w-100" alt="Путешествие 1">
+                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
+                        <h5>Горы Швейцарии</h5>
+                        <p>Альпийские пейзажи</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ url_for('static', filename='img/travel2.jpg') }}" class="d-block w-100" alt="Путешествие 2">
+                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
+                        <h5>Пляжи Бали</h5>
+                        <p>Тропический рай</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ url_for('static', filename='img/travel3.jpg') }}" class="d-block w-100" alt="Путешествие 3">
+                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
+                        <h5>Париж</h5>
+                        <p>Город любви</p>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="carousel-control-prev" type="button" data-bs-target="#travelCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#travelCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ url_for('static', filename='img/travel4.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Япония</h5>
+                        <p class="card-text">Страна восходящего солнца</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ url_for('static', filename='img/travel5.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Италия</h5>
+                        <p class="card-text">Колыбель искусства</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ url_for('static', filename='img/travel6.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Норвегия</h5>
+                        <p class="card-text">Фьорды и северное сияние</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
