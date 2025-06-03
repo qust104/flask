@@ -2,50 +2,144 @@
 
 {% block title %}Загрузка фото{% endblock %}
 
+{% block extra_css %}
+<style>
+    .photo-thumbnail {
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+    .photo-thumbnail:hover {
+        transform: scale(1.03);
+    }
+    .photo-card {
+        transition: all 0.3s;
+    }
+    .photo-card:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="row">
     <div class="col-lg-8 mx-auto">
         <h1>Загрузка фотографий</h1>
-        <p class="lead">Поделитесь своими впечатлениями</p>
+        <p class="lead">Фото сохраняются только в вашем браузере</p>
         
         <div class="card shadow-sm mb-4">
             <div class="card-body">
-                <form method="post" enctype="multipart/form-data">
-                    {{ form.hidden_tag() }}
+                <form id="uploadForm" enctype="multipart/form-data">
                     <div class="mb-3">
-                        {{ form.photo.label(class="form-label") }}
-                        {{ form.photo(class="form-control") }}
-                        {% for error in form.photo.errors %}
-                            <div class="text-danger">{{ error }}</div>
-                        {% endfor %}
+                        <label for="photoInput" class="form-label">Выберите фото</label>
+                        <input class="form-control" type="file" id="photoInput" accept="image/jpeg, image/png, image/gif">
                         <div class="form-text">Допустимые форматы: JPG, PNG, GIF</div>
                     </div>
-                    {{ form.submit(class="btn btn-primary") }}
+                    <button type="button" id="uploadBtn" class="btn btn-primary">Загрузить</button>
                 </form>
             </div>
         </div>
 
-        {% if uploaded_photos %}
         <div class="card shadow-sm">
             <div class="card-body">
-                <h4>Загруженные фото:</h4>
-                <div class="row mt-3">
-                    {% for photo in uploaded_photos %}
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <img src="{{ url_for('static', filename='img/' + photo) }}" class="card-img-top">
-                            <div class="card-body text-center">
-                                <form method="post" action="{{ url_for('delete_photo', filename=photo) }}">
-                                    <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
-                                </form>
-                            </div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="mb-0">Ваши фотографии</h4>
+                    <button id="clearAllBtn" class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i> Очистить все
+                    </button>
+                </div>
+                
+                <div id="photoGallery" class="row mt-3">
+                    <div class="col-12">
+                        <div class="alert alert-info" id="emptyMessage">
+                            Вы еще не загрузили ни одной фотографии
                         </div>
                     </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>
-        {% endif %}
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Инициализация хранилища
+    let photoStore = JSON.parse(localStorage.getItem('travelPhotos')) || [];
+    const photoGallery = document.getElementById('photoGallery');
+    const emptyMessage = document.getElementById('emptyMessage');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const photoInput = document.getElementById('photoInput');
+
+    // Функция отображения фотографий
+    function renderPhotos() {
+        photoGallery.innerHTML = '';
+        
+        if (photoStore.length === 0) {
+            emptyMessage.style.display = 'block';
+            clearAllBtn.style.display = 'none';
+            return;
+        }
+        
+        emptyMessage.style.display = 'none';
+        clearAllBtn.style.display = 'block';
+        
+        photoStore.forEach((photoData, index) => {
+            const col = document.createElement('div');
+            col.className = 'col-md-4 mb-4';
+            col.innerHTML = `
+                <div class="card photo-card h-100">
+                    <img src="${photoData}" class="card-img-top photo-thumbnail">
+                    <div class="card-body text-center">
+                        <button class="btn btn-danger btn-sm delete-btn" data-index="${index}">
+                            <i class="bi bi-trash"></i> Удалить
+                        </button>
+                    </div>
+                </div>
+            `;
+            photoGallery.appendChild(col);
+        });
+        
+        // Добавляем обработчики для кнопок удаления
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const index = this.getAttribute('data-index');
+                photoStore.splice(index, 1);
+                localStorage.setItem('travelPhotos', JSON.stringify(photoStore));
+                renderPhotos();
+            });
+        });
+    }
+
+    // Обработчик загрузки фото
+    uploadBtn.addEventListener('click', function() {
+        const file = photoInput.files[0];
+        if (!file) {
+            alert('Пожалуйста, выберите файл');
+            return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            photoStore.push(e.target.result);
+            localStorage.setItem('travelPhotos', JSON.stringify(photoStore));
+            renderPhotos();
+            photoInput.value = ''; // Сбрасываем input
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // Очистка всех фото
+    clearAllBtn.addEventListener('click', function() {
+        if (confirm('Вы уверены, что хотите удалить все фотографии?')) {
+            photoStore = [];
+            localStorage.removeItem('travelPhotos');
+            renderPhotos();
+        }
+    });
+
+    // Первоначальная загрузка
+    renderPhotos();
+});
+</script>
 {% endblock %}

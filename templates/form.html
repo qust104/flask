@@ -8,25 +8,59 @@
         <h1>Форма путешественника</h1>
         <p class="lead">Заполните информацию о себе</p>
         
-        <form method="post" novalidate enctype="multipart/form-data">
+        <form method="post" novalidate>
             {{ form.hidden_tag() }}
             
-            <!-- Существующие поля формы -->
-            
+            <!-- Поле имени -->
             <div class="mb-3">
-                {{ form.photo.label(class="form-label") }}
-                {{ form.photo(class="form-control") }}
-                {% if photo_url %}
-                <div class="mt-2">
-                    <img src="{{ photo_url }}" class="img-thumbnail" style="max-height: 200px;">
-                    <input type="hidden" name="existing_photo" value="{{ photo_url }}">
-                </div>
-                {% endif %}
-                {% for error in form.photo.errors %}
+                {{ form.name.label(class="form-label") }}
+                {{ form.name(class="form-control") }}
+                {% for error in form.name.errors %}
                     <div class="invalid-feedback" style="display: block;">{{ error }}</div>
                 {% endfor %}
             </div>
             
+            <!-- Поле email -->
+            <div class="mb-3">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control") }}
+                {% for error in form.email.errors %}
+                    <div class="invalid-feedback" style="display: block;">{{ error }}</div>
+                {% endfor %}
+            </div>
+            
+            <!-- Выпадающий список стран -->
+            <div class="mb-3">
+                {{ form.country.label(class="form-label") }}
+                {{ form.country(class="form-select") }}
+                {% for error in form.country.errors %}
+                    <div class="invalid-feedback" style="display: block;">{{ error }}</div>
+                {% endfor %}
+            </div>
+            
+            <!-- Радиокнопки опыта -->
+            <div class="mb-3">
+                {{ form.experience.label(class="form-label") }}
+                <div class="form-group">
+                    {% for subfield in form.experience %}
+                        <div class="form-check">
+                            {{ subfield(class="form-check-input") }}
+                            {{ subfield.label(class="form-check-label") }}
+                        </div>
+                    {% endfor %}
+                </div>
+                {% for error in form.experience.errors %}
+                    <div class="invalid-feedback" style="display: block;">{{ error }}</div>
+                {% endfor %}
+            </div>
+            
+            <!-- Чекбокс рассылки -->
+            <div class="mb-3 form-check">
+                {{ form.newsletter(class="form-check-input") }}
+                {{ form.newsletter.label(class="form-check-label") }}
+            </div>
+            
+            <!-- Кнопка отправки -->
             {{ form.submit(class="btn btn-primary") }}
         </form>
     </div>

@@ -29,4 +29,3 @@ class UploadForm(FlaskForm):
         FileAllowed(['jpg', 'png', 'jpeg', 'gif'], 'Только изображения!')
     ])
     submit = SubmitField('Загрузить')
-

@@ -1,80 +1,72 @@
 {% extends "base.html" %}
 
-{% block title %}Галерея{% endblock %}
+{% block title %}Галерея путешествий{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <h1 class="text-center mb-5">Галерея путешествий</h1>
-        
-        <div id="travelCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#travelCarousel" data-bs-slide-to="0" class="active"></button>
-                <button type="button" data-bs-target="#travelCarousel" data-bs-slide-to="1"></button>
-                <button type="button" data-bs-target="#travelCarousel" data-bs-slide-to="2"></button>
-            </div>
-            
-            <div class="carousel-inner rounded-3 shadow-lg">
-                <div class="carousel-item active">
-                    <img src="{{ url_for('static', filename='img/travel1.jpg') }}" class="d-block w-100" alt="Путешествие 1">
-                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
-                        <h5>Горы Швейцарии</h5>
-                        <p>Альпийские пейзажи</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ url_for('static', filename='img/travel2.jpg') }}" class="d-block w-100" alt="Путешествие 2">
-                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
-                        <h5>Пляжи Бали</h5>
-                        <p>Тропический рай</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ url_for('static', filename='img/travel3.jpg') }}" class="d-block w-100" alt="Путешествие 3">
-                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
-                        <h5>Париж</h5>
-                        <p>Город любви</p>
-                    </div>
-                </div>
-            </div>
-            
-            <button class="carousel-control-prev" type="button" data-bs-target="#travelCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#travelCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </button>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Галерея наших путешествий</h1>
+    
+    <!-- Карусель Bootstrap -->
+    <div id="travelCarousel" class="carousel slide shadow-lg mb-5" data-bs-ride="carousel">
+        <!-- Индикаторы -->
+        <div class="carousel-indicators">
+            {% for photo in photos %}
+            <button type="button" data-bs-target="#travelCarousel" 
+                   data-bs-slide-to="{{ loop.index0 }}"
+                   {% if loop.first %}class="active"{% endif %}></button>
+            {% endfor %}
         </div>
         
-        <div class="row mt-5">
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <img src="{{ url_for('static', filename='img/travel4.jpg') }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Япония</h5>
-                        <p class="card-text">Страна восходящего солнца</p>
-                    </div>
+        <!-- Слайды -->
+        <div class="carousel-inner rounded-3">
+            {% for photo in photos %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <img src="{{ url_for('static', filename='img/gallery/' + photo.filename) }}"
+                     class="d-block w-100"
+                     style="height: 60vh; object-fit: cover;"
+                     alt="{{ photo.title }}">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
+                    <h5>{{ photo.title }}</h5>
+                    <p>{{ photo.desc }}</p>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <img src="{{ url_for('static', filename='img/travel5.jpg') }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Италия</h5>
-                        <p class="card-text">Колыбель искусства</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <img src="{{ url_for('static', filename='img/travel6.jpg') }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Норвегия</h5>
-                        <p class="card-text">Фьорды и северное сияние</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
+        
+        <!-- Кнопки управления -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#travelCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#travelCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    
+    <!-- Миниатюры для навигации -->
+    <div class="row">
+        {% for photo in photos %}
+        <div class="col-md-4 mb-4">
+            <img src="{{ url_for('static', filename='img/gallery/' + photo.filename) }}"
+                 class="img-thumbnail w-100"
+                 style="height: 200px; object-fit: cover; cursor: pointer;"
+                 data-bs-target="#travelCarousel"
+                 data-bs-slide-to="{{ loop.index0 }}"
+                 alt="{{ photo.title }}">
+        </div>
+        {% endfor %}
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Подключение jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Инициализация карусели
+    const myCarousel = new bootstrap.Carousel('#travelCarousel');
+});
+</script>
 {% endblock %}

@@ -53,24 +53,49 @@ def archive(name, number1, number2):
                          number2=number2,
                          total=total)
 
+@app.route('/delete_photo/<filename>', methods=['POST'])
+def delete_photo(filename):
+    try:
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        if os.path.exists(filepath):
+            os.remove(filepath)
+            flash('Фото удалено!', 'success')
+    except Exception as e:
+        flash('Ошибка при удалении фото', 'danger')
+    return redirect(url_for('upload'))
 
-
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/upload', methods=['GET'])
 def upload():
     form = UploadForm()
-    photo_url = None
-    
-    if form.validate_on_submit():
-        file = form.photo.data
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        photo_url = url_for('static', filename=f'img/{filename}')
-        flash('Фото успешно загружено!', 'success')
-    
-    return render_template('upload.html', form=form, photo_url=photo_url)
+    return render_template('upload.html', form=form)
+
+# Добавьте этот код в ваш файл app.py
+# Добавьте этот код в ваш файл app.py
 @app.route('/gallery')
 def gallery():
-    return render_template('gallery.html')
+    gallery_photos = [
+        {
+            'filename': 'travel9.jpg',
+            'title': 'Горный пейзаж',
+            'desc': 'Красивый вид на горы'
+        },
+        {
+            'filename': 'travel8.jpg',
+            'title': 'Морской берег',
+            'desc': 'Пляж с белым песком'
+        },
+        {
+            'filename': 'travel7.jpg',
+            'title': 'Городская панорама',
+            'desc': 'Ночной город'
+        }
+    ]
+    return render_template('gallery.html', photos=gallery_photos)
+
+
+def get_uploaded_photos():
+    return [f for f in os.listdir(app.config['UPLOAD_FOLDER']) 
+            if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'], f))]
 
 if __name__ == '__main__':
     app.run(debug=True)
