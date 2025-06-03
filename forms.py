@@ -3,6 +3,23 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, EmailField, SelectField, RadioField, BooleanField, SubmitField, FileField
 from wtforms.validators import DataRequired, Email
 from flask_wtf.file import FileAllowed
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, TextAreaField, FileField
+from wtforms.validators import DataRequired, Length
+
+class LoginForm(FlaskForm):
+    username = StringField('Логин', validators=[DataRequired()])
+    password = PasswordField('Пароль', validators=[DataRequired()])
+
+class RegistrationForm(FlaskForm):
+    username = StringField('Логин', validators=[DataRequired(), Length(min=4, max=50)])
+    password = PasswordField('Пароль', validators=[DataRequired(), Length(min=6)])
+
+class PostForm(FlaskForm):
+    title = StringField('Заголовок', validators=[DataRequired()])
+    content = TextAreaField('Содержание', validators=[DataRequired()])
+    location = StringField('Местоположение')
+    file = FileField('Прикрепить файл')
 
 class TravelerForm(FlaskForm):
     name = StringField('Ваше имя', validators=[DataRequired()])
@@ -29,3 +46,4 @@ class UploadForm(FlaskForm):
         FileAllowed(['jpg', 'png', 'jpeg', 'gif'], 'Только изображения!')
     ])
     submit = SubmitField('Загрузить')
+
